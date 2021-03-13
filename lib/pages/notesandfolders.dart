@@ -30,6 +30,18 @@ class NotesAndFoldersState extends State<NotesAndFolders> {
                     );
                 }
             ),
+            persistentFooterButtons: <Widget>[
+                TextButton.icon(
+                    icon: Icon(Icons.create_new_folder),
+                    label: Text("New Folder"),
+                    onPressed: () {},
+                ),
+                TextButton.icon(
+                    icon: Icon(Icons.note_add),
+                    label: Text("New Note"),
+                    onPressed: () {},
+                ),
+            ]
         );
     }
 }
