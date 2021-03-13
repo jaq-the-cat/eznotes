@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import '../widgets.dart';
 import '../fileio.dart';
+import '../dialogs/newx.dart';
 
 class NotesAndFolders extends StatefulWidget {
     State<NotesAndFolders> createState() => NotesAndFoldersState();
@@ -34,12 +35,12 @@ class NotesAndFoldersState extends State<NotesAndFolders> {
                 TextButton.icon(
                     icon: Icon(Icons.create_new_folder),
                     label: Text("New Folder"),
-                    onPressed: () {},
+                    onPressed: () { newX(context, "New Folder", (s) {}); },
                 ),
                 TextButton.icon(
                     icon: Icon(Icons.note_add),
                     label: Text("New Note"),
-                    onPressed: () {},
+                    onPressed: () { newX(context, "New Note", (s) {}); },
                 ),
             ]
         );
