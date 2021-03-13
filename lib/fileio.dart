@@ -1,5 +1,5 @@
-Future<Map<String, String>> getNotes() async {
-    return {
+class Notes {
+    Map<String, String> notes = {
         "Note 1": "Content",
         "Note 2": "Content",
         "Note 3": "Content",
@@ -11,10 +11,18 @@ Future<Map<String, String>> getNotes() async {
         "Note 9": "Content",
         "Note 10": "Content",
     };
+
+    Future<void> addNote(String note) async {
+        notes[note] = "";
+    }
+
+    Future<Map<String, String>> getNotes() async {
+        return notes;
+    }
 }
 
-Future<Map<String, Map<String, String>>> getFolders() async {
-    return {
+class Folders {
+    Map<String, Map<String, String>> folders = {
         "Folder 1": {
             "Note 1-1": "Content",
             "Note 1-2": "Content",
@@ -41,8 +49,19 @@ Future<Map<String, Map<String, String>>> getFolders() async {
             "Note 5-3": "Content",
         },
     };
+
+    Future<void> addFolder(String folder) async {
+        folders[folder] = {};
+    }
+
+    Future<Map<String, Map<String, String>>> getFolders() async {
+        return folders;
+    }
 }
 
+Notes notes = Notes();
+Folders folders = Folders();
+
 Future<List<Map<String, dynamic>>> getAll() async =>
-    [await getNotes(), await getFolders()];
+    [await notes.getNotes(), await folders.getFolders()];
 

@@ -21,13 +21,13 @@ class NotesAndFoldersState extends State<NotesAndFolders> {
                 future: getAll(),
                 builder: (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
                     if (!snapshot.hasData) return Container();
-                    Map<String, dynamic> notes = snapshot.data[0];
-                    Map<String, dynamic> folders = snapshot.data[1];
+                    Map<String, dynamic> _notes = snapshot.data[0];
+                    Map<String, dynamic> _folders = snapshot.data[1];
                     return ListView(
                         children:
-                        getClickableList(context, folders, isFolder: true)
+                        getClickableList(context, _folders, isFolder: true)
                         + [ Divider(indent: 10, endIndent: 10), ]
-                        + getClickableList(context, notes, isFolder: false)
+                        + getClickableList(context, _notes, isFolder: false)
                     );
                 }
             ),
@@ -35,12 +35,20 @@ class NotesAndFoldersState extends State<NotesAndFolders> {
                 TextButton.icon(
                     icon: Icon(Icons.create_new_folder),
                     label: Text("New Folder"),
-                    onPressed: () { newX(context, "New Folder", (s) {}); },
+                    onPressed: () {
+                        newX(context, "New Folder", (s) {
+                            setState(() { folders.addFolder(s); });
+                        });
+                    },
                 ),
                 TextButton.icon(
                     icon: Icon(Icons.note_add),
                     label: Text("New Note"),
-                    onPressed: () { newX(context, "New Note", (s) {}); },
+                    onPressed: () {
+                        newX(context, "New Note", (s) {
+                            setState(() { notes.addNote(s); });
+                        });
+                    },
                 ),
             ]
         );
