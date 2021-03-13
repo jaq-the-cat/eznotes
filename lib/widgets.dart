@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'pages/note.dart';
+import 'helpers.dart';
 
 Widget fullTextField({TextEditingController controller}) => Padding(
     padding: EdgeInsets.all(10),
@@ -28,10 +30,10 @@ Widget _noteItem(String itemTitle, IconData icon, {void Function() onTap, void F
         ),
     );
 
-List<Widget> getClickableList(Map<String, dynamic> items, {bool isFolder = false}) =>
+List<Widget> getClickableList(BuildContext context, Map<String, dynamic> items, {bool isFolder = false}) =>
     List<Widget>.from(items.keys.map((itemTitle) => _noteItem(
         itemTitle,
         isFolder ? Icons.folder : Icons.note,
-        onTap: isFolder ? () {} : () {},
+        onTap: isFolder ? () { } : () { switchToPage(context, Note(itemTitle, items[itemTitle])); },
         onLongPress: isFolder ? () {} : () {},
     )));

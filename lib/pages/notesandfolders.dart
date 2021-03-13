@@ -24,9 +24,9 @@ class NotesAndFoldersState extends State<NotesAndFolders> {
                     Map<String, dynamic> folders = snapshot.data[1];
                     return ListView(
                         children:
-                        getClickableList(notes, isFolder: false)
+                        getClickableList(context, folders, isFolder: true)
                         + [ Divider(indent: 10, endIndent: 10), ]
-                        + getClickableList(folders, isFolder: true)
+                        + getClickableList(context, notes, isFolder: false)
                     );
                 }
             ),
