@@ -32,12 +32,15 @@ Widget _noteItem(String itemTitle, IconData icon, {void Function() onTap, void F
         ),
     );
 
-List<Widget> getClickableList(BuildContext context, Map<String, dynamic> items, {bool isFolder = false}) =>
+List<Widget> getClickableList(BuildContext context, Map<String, dynamic> items, {
+    bool isFolder = false,
+    String folderName
+}) =>
     List<Widget>.from(items.keys.map((itemTitle) => _noteItem(
         itemTitle,
         isFolder ? Icons.folder : Icons.note,
         onTap: isFolder
             ? () { switchToPage(context, Folder(itemTitle, items[itemTitle])); }
-            : () { switchToPage(context, Note(itemTitle, items[itemTitle])); },
+            : () { switchToPage(context, Note(itemTitle, items[itemTitle], folder: folderName)); },
         onLongPress: isFolder ? () {} : () {},
     )));

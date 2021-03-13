@@ -14,7 +14,7 @@ class Folder extends StatelessWidget {
                 title: Text(folderTitle),
             ),
             body: ListView(
-                children: getClickableList(context, folderContent, isFolder: false),
+                children: getClickableList(context, folderContent, isFolder: false, folderName: folderTitle),
             ),
         );
     }

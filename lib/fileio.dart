@@ -12,8 +12,8 @@ class Notes {
         "Note 10": "Content",
     };
 
-    Future<void> addNote(String note) async {
-        notes[note] = "";
+    Future<void> addNote(String note, [String content = ""]) async {
+        notes[note] = content;
     }
 
     Future<Map<String, String>> getNotes() async {
@@ -52,6 +52,10 @@ class Folders {
 
     Future<void> addFolder(String folder) async {
         folders[folder] = {};
+    }
+
+    Future<void> addNote(String folder, String note, [String content = ""]) async {
+        folders[folder][note] = content;
     }
 
     Future<Map<String, Map<String, String>>> getFolders() async {
