@@ -26,7 +26,7 @@ class NoteState extends State<Note> {
     Widget build(BuildContext context) {
         return Scaffold(
             appBar: AppBar(
-                title: Text(widget.noteTitle),
+                title: Text("${widget.folder ?? ""}/${widget.noteTitle}"),
                 actions: [
                     Padding(
                         padding: EdgeInsets.all(10),
