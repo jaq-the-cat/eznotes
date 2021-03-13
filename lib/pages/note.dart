@@ -12,6 +12,7 @@ class Note extends StatefulWidget {
 class NoteState extends State<Note> {
 
     TextEditingController controller = TextEditingController();
+    bool changed = false;
 
     @override
     Widget build(BuildContext context) {
@@ -19,8 +20,21 @@ class NoteState extends State<Note> {
         return Scaffold(
             appBar: AppBar(
                 title: Text(widget.noteTitle),
+                actions: [
+                    Padding(
+                        padding: EdgeInsets.all(10),
+                        child: ElevatedButton(
+                            child: Text("Save"),
+                            onPressed: changed
+                            ? () {
+                                setState(() => this.changed = false);
+                            }
+                            : null,
+                        ),
+                    ),
+                ],
             ),
-            body: fullTextField(controller: controller),
+            body: fullTextField(controller: controller, onChanged: () { setState(() => this.changed = true); }),
         );
     }
 }

@@ -3,12 +3,13 @@ import 'pages/folder.dart';
 import 'pages/note.dart';
 import 'helpers.dart';
 
-Widget fullTextField({TextEditingController controller}) => Padding(
+Widget fullTextField({TextEditingController controller, void Function() onChanged}) => Padding(
     padding: EdgeInsets.all(10),
     child: TextField(
         controller: controller,
         maxLines: 256,
         keyboardType: TextInputType.multiline,
+        onChanged: (s) => onChanged(),
         decoration: InputDecoration(
             border:  InputBorder.none,
         ),
