@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'pages/folder.dart';
 import 'pages/note.dart';
 import 'helpers.dart';
 
@@ -34,6 +35,8 @@ List<Widget> getClickableList(BuildContext context, Map<String, dynamic> items, 
     List<Widget>.from(items.keys.map((itemTitle) => _noteItem(
         itemTitle,
         isFolder ? Icons.folder : Icons.note,
-        onTap: isFolder ? () { } : () { switchToPage(context, Note(itemTitle, items[itemTitle])); },
+        onTap: isFolder
+            ? () { switchToPage(context, Folder(itemTitle, items[itemTitle])); }
+            : () { switchToPage(context, Note(itemTitle, items[itemTitle])); },
         onLongPress: isFolder ? () {} : () {},
     )));

@@ -18,7 +18,6 @@ class NoteState extends State<Note> {
         controller.text = widget.noteContent;
         return Scaffold(
             appBar: AppBar(
-                leading: Icon(Icons.note),
                 title: Text(widget.noteTitle),
             ),
             body: fullTextField(controller: controller),
