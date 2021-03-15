@@ -49,7 +49,7 @@ class Folders {
     }
 
     Future<dynamic> getFolder(String folder) async {
-        return (await _foldersbox).get(folder);
+        return (await _foldersbox).get(folder).keys;
     }
 
     Future<dynamic> getFolderNote(String folder, String note) async {
