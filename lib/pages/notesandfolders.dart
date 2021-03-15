@@ -19,10 +19,10 @@ class NotesAndFoldersState extends State<NotesAndFolders> {
             ),
             body: FutureBuilder(
                 future: getAll(),
-                builder: (context, AsyncSnapshot<List<Map<String, dynamic>>> snapshot) {
+                builder: (context, snapshot) {
                     if (!snapshot.hasData) return Container();
-                    Map<String, dynamic> _notes = snapshot.data[0];
-                    Map<String, dynamic> _folders = snapshot.data[1];
+                    Map<dynamic, dynamic> _notes = snapshot.data[0];
+                    Map<dynamic, dynamic> _folders = snapshot.data[1];
                     return ListView(
                         children:
                             getClickableList(context, _folders, isFolder: true)

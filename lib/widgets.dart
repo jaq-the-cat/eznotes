@@ -32,7 +32,7 @@ Widget _noteItem(String itemTitle, IconData icon, {void Function() onTap, void F
         ),
     );
 
-List<Widget> getClickableList(BuildContext context, Map<String, dynamic> items, {
+List<Widget> getClickableList(BuildContext context, Map<dynamic, dynamic> items, {
     bool isFolder = false,
     String folderName
 }) =>
