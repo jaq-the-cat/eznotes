@@ -50,4 +50,3 @@ Future<String> newX(BuildContext context, String toCreate, void Function(String)
         ),
     );
 }
-

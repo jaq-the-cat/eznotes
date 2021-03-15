@@ -3,6 +3,7 @@ import 'pages/folder.dart';
 import 'pages/note.dart';
 import 'helpers.dart';
 import 'fileio.dart';
+import 'dialogs/confirmdel.dart';
 
 Widget fullTextField({TextEditingController controller, void Function() onChanged}) => Padding(
     padding: EdgeInsets.all(10),
@@ -46,13 +47,18 @@ List<Widget> getClickableList(BuildContext context, Iterable<dynamic> items, {
             : () { switchToPage(context, Note(itemTitle, folder: folderName)); },
         onLongPress: isFolder
             ? () {
-                folders.deleteFolder(itemTitle);
-                onHold();
+                confirmDelete(context, itemTitle).then((v) {
+                    if (v) folders.deleteFolder(itemTitle);
+                    onHold();
+                });
             }
             : () {
-                folderName == null
-                    ? notes.deleteNote(itemTitle)
-                    : folders.deleteNote(folderName, itemTitle);
-                onHold();
+                confirmDelete(context, itemTitle).then((v) {
+                    if (v)
+                        folderName == null
+                            ? notes.deleteNote(itemTitle)
+                            : folders.deleteNote(folderName, itemTitle);
+                    onHold();
+                });
             },
     )));
