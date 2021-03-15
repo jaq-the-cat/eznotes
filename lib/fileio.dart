@@ -18,8 +18,12 @@ class Notes {
         (await _notesbox).put(note, content);
     }
 
-    Future<Map<dynamic, dynamic>> getNotes() async {
-        return (await _notesbox).toMap();
+    Future<dynamic> getNote(String note) async {
+        return (await _notesbox).get(note);
+    }
+
+    Future<Iterable<dynamic>> getNotes() async {
+        return (await _notesbox).toMap().keys;
     }
 
     Future<void> deleteNote(String note) async {
@@ -40,8 +44,18 @@ class Folders {
         _rfolders.put(folder, curvalues);
     }
 
-    Future<Map<dynamic, dynamic>> getFolders() async {
-        return (await _foldersbox).toMap();
+    Future<Iterable<dynamic>> getFolders() async {
+        return (await _foldersbox).toMap().keys;
+    }
+
+    Future<dynamic> getFolder(String folder) async {
+        return (await _foldersbox).get(folder);
+    }
+
+    Future<dynamic> getFolderNote(String folder, String note) async {
+        final _rfolders = await _foldersbox;
+        Map<dynamic, dynamic> curvalues = _rfolders.get(folder);
+        return curvalues[note];
     }
 
     Future<void> deleteNote(String folder, String note) async {
@@ -59,6 +73,6 @@ class Folders {
 Notes notes = Notes();
 Folders folders = Folders();
 
-Future<List<Map<dynamic, dynamic>>> getAll() async =>
+Future<Iterable<Iterable<dynamic>>> getAll() async =>
     [await notes.getNotes(), await folders.getFolders()];
 

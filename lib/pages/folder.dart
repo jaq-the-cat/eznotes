@@ -4,10 +4,9 @@ import '../dialogs/newx.dart';
 import '../widgets.dart';
 
 class Folder extends StatefulWidget {
-    Folder(this.folderTitle, this.folderContent, {Key key}) : super(key: key);
+    Folder(this.folderTitle, {Key key}) : super(key: key);
 
     final String folderTitle;
-    final Map<dynamic, dynamic> folderContent;
 
     @override
     FolderState createState() => FolderState();
@@ -20,10 +19,16 @@ class FolderState extends State<Folder> {
             appBar: AppBar(
                 title: Text("/${widget.folderTitle}"),
             ),
-            body: ListView(
-                children: getClickableList(context, widget.folderContent,
-                    isFolder: false, folderName: widget.folderTitle,
-                    onHold: () => setState(() {})),
+            body: FutureBuilder(
+              future: folders.getFolder(widget.folderTitle),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) return Container();
+                return ListView(
+                    children: getClickableList(context, snapshot.data,
+                        isFolder: false, folderName: widget.folderTitle,
+                        onHold: () => setState(() {})),
+                );
+              }
             ),
             persistentFooterButtons: <Widget>[
                 TextButton.icon(

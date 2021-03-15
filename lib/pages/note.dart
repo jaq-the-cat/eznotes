@@ -3,9 +3,9 @@ import '../widgets.dart';
 import '../fileio.dart';
 
 class Note extends StatefulWidget {
-    Note(this.noteTitle, this.noteContent, {this.folder, Key key}) : super(key: key);
+    Note(this.noteTitle, {this.folder, Key key}) : super(key: key);
 
-    final String noteTitle, noteContent;
+    final String noteTitle;
     final String folder;
 
     State<Note> createState() => NoteState();
@@ -15,12 +15,6 @@ class NoteState extends State<Note> {
 
     TextEditingController controller = TextEditingController();
     bool changed = false;
-
-    @override
-    void initState() {
-        controller.text = widget.noteContent;
-        super.initState();
-    }
 
     @override
     Widget build(BuildContext context) {
@@ -35,7 +29,6 @@ class NoteState extends State<Note> {
                             onPressed: changed
                             ? () {
                                 setState(() => this.changed = false);
-                                print(widget.folder);
                                 if (widget.folder == null)
                                     notes.addNote(widget.noteTitle, controller.text).whenComplete(() => setState(() {}));
                                 else
@@ -46,7 +39,15 @@ class NoteState extends State<Note> {
                     ),
                 ],
             ),
-            body: fullTextField(controller: controller, onChanged: () { setState(() => this.changed = true); }),
+            body: FutureBuilder(
+                future: widget.folder == null ? notes.getNote(widget.noteTitle) : folders.getFolderNote(widget.folder, widget.noteTitle),
+                builder: (context, snapshot) {
+                    if (!snapshot.hasData) return Container();
+                    if (controller.text.isEmpty)
+                        controller.text = snapshot.data;
+                    return fullTextField(controller: controller, onChanged: () { setState(() => this.changed = true); });
+                }
+                    ),
         );
     }
 }
