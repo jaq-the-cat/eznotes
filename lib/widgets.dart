@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/folder.dart';
 import 'pages/note.dart';
 import 'helpers.dart';
+import 'fileio.dart';
 
 Widget fullTextField({TextEditingController controller, void Function() onChanged}) => Padding(
     padding: EdgeInsets.all(10),
@@ -34,7 +35,8 @@ Widget _noteItem(String itemTitle, IconData icon, {void Function() onTap, void F
 
 List<Widget> getClickableList(BuildContext context, Map<dynamic, dynamic> items, {
     bool isFolder = false,
-    String folderName
+    String folderName,
+    void Function() onHold,
 }) =>
     List<Widget>.from(items.keys.map((itemTitle) => _noteItem(
         itemTitle,
@@ -42,5 +44,15 @@ List<Widget> getClickableList(BuildContext context, Map<dynamic, dynamic> items,
         onTap: isFolder
             ? () { switchToPage(context, Folder(itemTitle, items[itemTitle])); }
             : () { switchToPage(context, Note(itemTitle, items[itemTitle], folder: folderName)); },
-        onLongPress: isFolder ? () {} : () {},
+        onLongPress: isFolder
+            ? () {
+                folders.deleteFolder(itemTitle);
+                onHold();
+            }
+            : () {
+                folderName == null
+                    ? notes.deleteNote(itemTitle)
+                    : folders.deleteNote(folderName, itemTitle);
+                onHold();
+            },
     )));

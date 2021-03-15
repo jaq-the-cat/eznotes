@@ -22,7 +22,8 @@ class FolderState extends State<Folder> {
             ),
             body: ListView(
                 children: getClickableList(context, widget.folderContent,
-                    isFolder: false, folderName: widget.folderTitle),
+                    isFolder: false, folderName: widget.folderTitle,
+                    onHold: () => setState(() {})),
             ),
             persistentFooterButtons: <Widget>[
                 TextButton.icon(
