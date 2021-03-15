@@ -37,9 +37,9 @@ class NoteState extends State<Note> {
                                 setState(() => this.changed = false);
                                 print(widget.folder);
                                 if (widget.folder == null)
-                                    notes.addNote(widget.noteTitle, controller.text);
+                                    notes.addNote(widget.noteTitle, controller.text).whenComplete(() => setState(() {}));
                                 else
-                                    folders.addNote(widget.folder, widget.noteTitle, controller.text);
+                                    folders.addNote(widget.folder, widget.noteTitle, controller.text).whenComplete(() => setState(() {}));
                             }
                             : null,
                         ),

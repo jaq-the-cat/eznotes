@@ -14,6 +14,7 @@ Future<Box> _foldersbox = (() async {
 class Notes {
 
     Future<void> addNote(String note, [String content = ""]) async {
+        print("adding note $note with content $content");
         (await _notesbox).put(note, content);
     }
 
