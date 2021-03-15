@@ -1,65 +1,50 @@
+import 'package:hive/hive.dart';
+import 'package:hive_flutter/hive_flutter.dart';
+
+final _hive = (() async => Hive.initFlutter())();
+
 class Notes {
-    Map<String, String> notes = {
-        "Note 1": "Content",
-        "Note 2": "Content",
-        "Note 3": "Content",
-        "Note 4": "Content",
-        "Note 5": "Content",
-        "Note 6": "Content",
-        "Note 7": "Content",
-        "Note 8": "Content",
-        "Note 9": "Content",
-        "Note 10": "Content",
-    };
+
+    Future<Box> box;
+
+    Notes() {
+        _hive.then((v) {
+            box = Hive.openBox('notes');
+        });
+    }
 
     Future<void> addNote(String note, [String content = ""]) async {
-        notes[note] = content;
+        (await box).put(note, content);
     }
 
     Future<Map<String, String>> getNotes() async {
-        return notes;
+        return (await box).toMap();
     }
 }
 
 class Folders {
-    Map<String, Map<String, String>> folders = {
-        "Folder 1": {
-            "Note 1-1": "Content",
-            "Note 1-2": "Content",
-            "Note 1-3": "Content",
-        },
-        "Folder 2": {
-            "Note 2-1": "Content",
-            "Note 2-2": "Content",
-            "Note 2-3": "Content",
-        },
-        "Folder 3": {
-            "Note 3-1": "Content",
-            "Note 3-2": "Content",
-            "Note 3-3": "Content",
-        },
-        "Folder 4": {
-            "Note 4-1": "Content",
-            "Note 4-2": "Content",
-            "Note 4-3": "Content",
-        },
-        "Folder 5": {
-            "Note 5-1": "Content",
-            "Note 5-2": "Content",
-            "Note 5-3": "Content",
-        },
-    };
+
+    Future<Box> box;
+
+    Folders() {
+        _hive.then((v) {
+            box = Hive.openBox('folders');
+        });
+    }
 
     Future<void> addFolder(String folder) async {
-        folders[folder] = {};
+        (await box).put(folder, {});
     }
 
     Future<void> addNote(String folder, String note, [String content = ""]) async {
-        folders[folder][note] = content;
+        final rbox = await box;
+        Map<String, String> curvalues = rbox.get(folder);
+        curvalues[note] = content;
+        rbox.put(folder, curvalues);
     }
 
     Future<Map<String, Map<String, String>>> getFolders() async {
-        return folders;
+        return (await box).toMap();
     }
 }
 
