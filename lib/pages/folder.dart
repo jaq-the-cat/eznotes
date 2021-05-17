@@ -22,7 +22,7 @@ class FolderState extends State<Folder> {
             body: FutureBuilder(
               future: folders.getFolder(widget.folderTitle),
               builder: (context, snapshot) {
-                if (!snapshot.hasData) return Container();
+                if (!snapshot.hasData || snapshot.data == null) return Container();
                 return ListView(
                     children: getClickableList(context, snapshot.data,
                         isFolder: false, folderName: widget.folderTitle,

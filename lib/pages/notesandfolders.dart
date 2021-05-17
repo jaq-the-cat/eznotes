@@ -20,11 +20,9 @@ class NotesAndFoldersState extends State<NotesAndFolders> {
             body: FutureBuilder(
                 future: getAll(),
                 builder: (context, snapshot) {
-                    print(snapshot.error);
                     if (!snapshot.hasData) return Container();
                     Iterable<dynamic> _notes = snapshot.data[0];
                     Iterable<dynamic> _folders = snapshot.data[1];
-                    print(_notes);
                     return ListView(
                         children:
                             getClickableList(context, _folders, isFolder: true, onHold: () => setState(() {}))
