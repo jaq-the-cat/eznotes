@@ -57,6 +57,7 @@ class _FolderPageState extends State<FolderPage> {
             onPressed: () async {
               newX(context, "Note").then((s) {
                 setState(() {
+                  if (s.isEmpty) return;
                   widget.folder.add(Note(s, ''));
                   g.root.then((root) => root.save());
                 });
@@ -71,6 +72,7 @@ class _FolderPageState extends State<FolderPage> {
             onPressed: () async {
               newX(context, "Folder").then((s) {
                 setState(() {
+                  if (s.isEmpty) return;
                   widget.folder.add(Folder(s, []));
                   g.root.then((root) => root.save());
                 });
