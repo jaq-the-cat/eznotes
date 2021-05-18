@@ -18,6 +18,22 @@ class FolderPage extends StatelessWidget {
           Text(n.title);
         }))
       ),
+      floatingActionButton: Row(
+        mainAxisAlignment: MainAxisAlignment.end,
+        children: [
+          FloatingActionButton(
+            child: Icon(Icons.note_add),
+            tooltip: "Add new note",
+            onPressed: () {},
+          ),
+          SizedBox(width: 10),
+          FloatingActionButton(
+            child: Icon(Icons.create_new_folder),
+            tooltip: "Add new folder",
+            onPressed: () {},
+          ),
+        ]
+      )
     );
   }
 }
