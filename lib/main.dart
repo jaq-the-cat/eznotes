@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'pages/notesandfolders.dart';
 
 void main() => runApp(App());
 
@@ -13,7 +12,7 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.dark,
       ),
-      home: NotesAndFolders(),
+      home: Container(),
     );
   }
 }
