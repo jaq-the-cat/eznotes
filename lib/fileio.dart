@@ -6,6 +6,23 @@ Future<Box> _box = (() async {
   return Hive.openBox('tree');
 })();
 
+Future<Folder> getRoot() async {
+  return _unserializeFolder((await _box).toMap());
+}
+
+Folder _unserializeFolder(Map<dynamic, dynamic> raw) {
+  return Folder(raw['title'], raw['children'].map((Map<dynamic, dynamic> e) {
+    if (e.containsKey('children'))
+      return _unserializeFolder(e);
+    else if (e.containsKey('content'))
+      return _unserializeNote(e);
+  }));
+}
+
+Note _unserializeNote(Map<dynamic, dynamic> raw) {
+  return Note(raw['title'], raw['content'] ?? "");
+}
+
 abstract class FSNode {
   final String title;
   FSNode(this.title);
