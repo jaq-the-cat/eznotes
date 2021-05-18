@@ -39,6 +39,7 @@ Future<String> newX(BuildContext context, String toCreate) {
               TextFormField(
                 autofocus: true,
                 controller: ctrl,
+                maxLength: 22,
                 decoration: InputDecoration(
                     labelText: toCreate,
                     labelStyle: TextStyle(
