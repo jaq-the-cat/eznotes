@@ -12,11 +12,28 @@ abstract class FSNode {
 }
 
 class Folder extends FSNode {
-  final List<FSNode> children;
+  List<FSNode> children;
   Folder(String title, this.children) : super(title);
+
+  void add(FSNode child) {
+    if (child == null) return;
+    if (children == null) children = [child];
+    else children.add(child);
+  }
+
+  void remove(FSNode child) {
+    children.remove(child);
+  }
+
+  void clear() {
+    children = [];
+  }
 }
 
 class Note extends FSNode {
-  final String content;
-  Note(String title, this.content) : super(title);
+  String _content;
+  Note(String title, this._content) : super(title);
+
+  set content(n) => _content = n ?? "";
+  String get content => _content;
 }
