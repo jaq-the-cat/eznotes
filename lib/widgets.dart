@@ -38,7 +38,10 @@ class _FolderPageState extends State<FolderPage> {
             onLongPress: () {
               confirmDelete(context, "${n.title}").then((d) {
                 if (d)
-                  setState(() => widget.folder.remove(n));
+                  setState(() {
+                    widget.folder.remove(n);
+                    g.root.then((root) => root.save());
+                  });
               });
             }
           );
@@ -53,7 +56,10 @@ class _FolderPageState extends State<FolderPage> {
             tooltip: "Add new note",
             onPressed: () async {
               newX(context, "Note").then((s) {
-                setState(() => widget.folder.add(Note(s, '')));
+                setState(() {
+                  widget.folder.add(Note(s, ''));
+                  g.root.then((root) => root.save());
+                });
               });
             },
           ),
@@ -64,7 +70,10 @@ class _FolderPageState extends State<FolderPage> {
             tooltip: "Add new folder",
             onPressed: () async {
               newX(context, "Folder").then((s) {
-                setState(() => widget.folder.add(Folder(s, [])));
+                setState(() {
+                  widget.folder.add(Folder(s, []));
+                  g.root.then((root) => root.save());
+                });
               });
             },
           ),
