@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'helpers.dart';
 import 'fileio.dart';
 
 class FolderPage extends StatefulWidget {
@@ -23,7 +24,12 @@ class _FolderPageState extends State<FolderPage> {
           return OutlinedButton.icon(
             icon: Icon(n.runtimeType == Folder ? Icons.folder_open : Icons.note),
             label: Text(n.title),
-            onPressed: () {},
+            onPressed: () {
+              if (n.runtimeType == Folder)
+                switchToPage(context, FolderPage(n));
+              else
+                switchToPage(context, Container());
+            },
           );
         }))
       ),
@@ -31,12 +37,14 @@ class _FolderPageState extends State<FolderPage> {
         mainAxisAlignment: MainAxisAlignment.end,
         children: [
           FloatingActionButton(
+            heroTag: "NoteAdd",
             child: Icon(Icons.note_add),
             tooltip: "Add new note",
             onPressed: () => setState(() { widget.folder.add(Note('title', 'content')); }),
           ),
           SizedBox(width: 10),
           FloatingActionButton(
+            heroTag: "FolderAdd",
             child: Icon(Icons.create_new_folder),
             tooltip: "Add new folder",
             onPressed: () => setState(() { widget.folder.add(Folder('ftitle', [])); }),
