@@ -76,7 +76,17 @@ class _NotePageState extends State<NotePage> {
         leading: Icon(Icons.note),
         title: Text(widget.header),
       ),
-      body: Container(),
+      body: Padding(
+        padding: EdgeInsets.all(15),
+        child: TextField(
+          keyboardType: TextInputType.multiline,
+          maxLines: null,
+          decoration: InputDecoration(
+            border:  InputBorder.none,
+            focusedBorder:  InputBorder.none,
+          ),
+        ),
+      ),
     );
   }
 }
