@@ -7,6 +7,9 @@ Future<Box> _box = (() async {
 })();
 
 Future<Folder> getRoot() async {
+  final root = (await _box).toMap();
+  if (root == null || root.isEmpty)
+    return Folder('root', []);
   return _unserializeFolder((await _box).toMap());
 }
 

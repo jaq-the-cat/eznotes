@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'widgets.dart';
 import 'fileio.dart';
 
 void main() => runApp(App());
@@ -16,13 +17,13 @@ class App extends StatelessWidget {
         visualDensity: VisualDensity.adaptivePlatformDensity,
         brightness: Brightness.dark,
       ),
-      home: Scaffold(
-          appBar: AppBar(
-            leading: Icon(Icons.note),
-            title: Text("eznotes"),
-          ),
-          body: Container(),
-        ),
+      home: FutureBuilder(
+        future: root,
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) return Container();
+          return FolderPage(snapshot.data);
+        }
+      ),
     );
   }
 }
