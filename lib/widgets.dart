@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'helpers.dart';
 import 'globals.dart' as g;
 import 'fileio.dart';
+import 'dialogs.dart';
 
 class FolderPage extends StatefulWidget {
   FolderPage(this.folder, {beforeTitle, Key key}) :
@@ -34,6 +35,12 @@ class _FolderPageState extends State<FolderPage> {
               else
                 switchToPage(context, NotePage(n, beforeTitle: widget.header));
             },
+            onLongPress: () {
+              confirmDelete(context, "${n.title}").then((d) {
+                if (d)
+                  setState(() => widget.folder.remove(n));
+              });
+            }
           );
         }))
       ),
@@ -44,14 +51,22 @@ class _FolderPageState extends State<FolderPage> {
             heroTag: "NoteAdd",
             child: Icon(Icons.note_add),
             tooltip: "Add new note",
-            onPressed: () => setState(() { widget.folder.add(Note('title', 'content')); }),
+            onPressed: () async {
+              newX(context, "Note").then((s) {
+                setState(() => widget.folder.add(Note(s, '')));
+              });
+            },
           ),
           SizedBox(width: 10),
           FloatingActionButton(
             heroTag: "FolderAdd",
             child: Icon(Icons.create_new_folder),
             tooltip: "Add new folder",
-            onPressed: () => setState(() { widget.folder.add(Folder('ftitle', [])); }),
+            onPressed: () async {
+              newX(context, "Folder").then((s) {
+                setState(() => widget.folder.add(Folder(s, [])));
+              });
+            },
           ),
         ]
       )
