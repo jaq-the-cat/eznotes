@@ -3,8 +3,11 @@ import 'helpers.dart';
 import 'fileio.dart';
 
 class FolderPage extends StatefulWidget {
-  FolderPage(this.folder, {Key key}) : super(key: key);
-  Folder folder;
+  FolderPage(this.folder, {beforeTitle, Key key}) :
+    header = "${beforeTitle ?? ""}/${folder.title}",
+    super(key: key);
+  final String header;
+  final Folder folder;
 
   @override
   _FolderPageState createState() => _FolderPageState();
@@ -16,7 +19,7 @@ class _FolderPageState extends State<FolderPage> {
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.folder_open),
-        title: Text(widget.folder.title),
+        title: Text(widget.header),
       ),
       body: ListView(
         padding: EdgeInsets.all(15),
@@ -26,7 +29,7 @@ class _FolderPageState extends State<FolderPage> {
             label: Text(n.title),
             onPressed: () {
               if (n.runtimeType == Folder)
-                switchToPage(context, FolderPage(n));
+                switchToPage(context, FolderPage(n, beforeTitle: widget.header));
               else
                 switchToPage(context, Container());
             },
