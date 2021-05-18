@@ -20,7 +20,9 @@ class App extends StatelessWidget {
       home: FutureBuilder(
         future: root,
         builder: (context, snapshot) {
-          if (!snapshot.hasData) return Container();
+          if (!snapshot.hasData) return Scaffold(
+            appBar: AppBar(),
+          );
           return FolderPage(snapshot.data);
         }
       ),
