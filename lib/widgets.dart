@@ -31,7 +31,7 @@ class _FolderPageState extends State<FolderPage> {
               if (n.runtimeType == Folder)
                 switchToPage(context, FolderPage(n, beforeTitle: widget.header));
               else
-                switchToPage(context, Container());
+                switchToPage(context, NotePage(n, beforeTitle: widget.header));
             },
           );
         }))
@@ -54,6 +54,29 @@ class _FolderPageState extends State<FolderPage> {
           ),
         ]
       )
+    );
+  }
+}
+
+class NotePage extends StatefulWidget {
+  NotePage(this.note, {beforeTitle, Key key}) :
+    header = "$beforeTitle/${note.title}",
+    super(key: key);
+  final String header;
+  final Note note;
+  @override
+  _NotePageState createState() => _NotePageState();
+}
+
+class _NotePageState extends State<NotePage> {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        leading: Icon(Icons.note),
+        title: Text(widget.header),
+      ),
+      body: Container(),
     );
   }
 }
