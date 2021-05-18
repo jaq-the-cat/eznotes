@@ -14,12 +14,12 @@ Future<Folder> getRoot() async {
 }
 
 Folder _unserializeFolder(Map<dynamic, dynamic> raw) {
-  return Folder(raw['title'], raw['children'].map((Map<dynamic, dynamic> e) {
+  return Folder(raw['title'], List<FSNode>.from(raw['children'].map((e) {
     if (e.containsKey('children'))
       return _unserializeFolder(e);
     else if (e.containsKey('content'))
       return _unserializeNote(e);
-  }));
+  })));
 }
 
 Note _unserializeNote(Map<dynamic, dynamic> raw) {

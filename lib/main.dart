@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
 import 'widgets.dart';
 import 'fileio.dart';
+import 'globals.dart' as g;
 
 void main() => runApp(App());
 
 class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Future<Folder> root = getRoot();
+    g.root = getRoot();
 
     return MaterialApp(
       title: 'EZNOTES',
@@ -18,7 +19,7 @@ class App extends StatelessWidget {
         brightness: Brightness.dark,
       ),
       home: FutureBuilder(
-        future: root,
+        future: g.root,
         builder: (context, snapshot) {
           if (!snapshot.hasData) return Scaffold(
             appBar: AppBar(),

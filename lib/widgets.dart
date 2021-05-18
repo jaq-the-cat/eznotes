@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'helpers.dart';
+import 'globals.dart' as g;
 import 'fileio.dart';
 
 class FolderPage extends StatefulWidget {
@@ -69,8 +70,12 @@ class NotePage extends StatefulWidget {
 }
 
 class _NotePageState extends State<NotePage> {
+
+  final TextEditingController controller = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
+    controller.text = widget.note.content;
     return Scaffold(
       appBar: AppBar(
         leading: Icon(Icons.note),
@@ -79,8 +84,13 @@ class _NotePageState extends State<NotePage> {
       body: Padding(
         padding: EdgeInsets.all(15),
         child: TextField(
+          controller: controller,
           keyboardType: TextInputType.multiline,
           maxLines: null,
+          onChanged: (s) async  {
+            widget.note.content = s;
+            (await g.root).save();
+          },
           decoration: InputDecoration(
             border:  InputBorder.none,
             focusedBorder:  InputBorder.none,
