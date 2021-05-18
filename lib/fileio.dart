@@ -9,6 +9,8 @@ Future<Box> _box = (() async {
 abstract class FSNode {
   final String title;
   FSNode(this.title);
+
+  Map<String, dynamic> serialize();
 }
 
 class Folder extends FSNode {
@@ -28,6 +30,19 @@ class Folder extends FSNode {
   void clear() {
     children = [];
   }
+
+  Map<String, dynamic> serialize() {
+    return {
+      'title': title,
+      'children': List.from(children.map((node) => node.serialize())),
+    };
+  }
+
+  void save() async {
+    Box box = await _box;
+    box.clear();
+    box.putAll(this.serialize());
+  }
 }
 
 class Note extends FSNode {
@@ -36,4 +51,11 @@ class Note extends FSNode {
 
   set content(n) => _content = n ?? "";
   String get content => _content;
+
+  Map<String, dynamic> serialize() {
+    return {
+      'title': title,
+      'content': content,
+    };
+  }
 }
