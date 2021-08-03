@@ -6,7 +6,7 @@ import 'dialogs.dart';
 
 class FolderPage extends StatefulWidget {
   FolderPage(this.folder, {beforeTitle, Key key}) :
-    header = "${beforeTitle == "" ? "" : "/"}${folder.title}",
+    header = "${(beforeTitle == "" || beforeTitle == null) ? "" : "$beforeTitle/"}${folder.title}",
     super(key: key);
   final String header;
   final Folder folder;
@@ -95,7 +95,7 @@ class _FolderPageState extends State<FolderPage> {
 
 class NotePage extends StatefulWidget {
   NotePage(this.note, {beforeTitle, Key key}) :
-    header = "${beforeTitle == "" ? "" : "/"}${note.title}",
+    header = "${(beforeTitle == "" || beforeTitle == null) ? "" : "$beforeTitle/"}${note.title}",
     super(key: key);
   final String header;
   final Note note;
