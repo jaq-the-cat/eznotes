@@ -36,14 +36,20 @@ class _FolderPageState extends State<FolderPage> {
                 switchToPage(context, NotePage(n, beforeTitle: widget.header));
             },
             onLongPress: () {
-              confirmDelete(context, "${n.title}").then((d) {
-                if (d)
+              renameOrDelete(context, n.title).then((a) {
+                if (a["action"] == "delete")
+                  if (a["confirm"])
+                    setState(() {
+                      widget.folder.remove(n);
+                      g.root.then((root) => root.save());
+                    });
+                else if (a["action"] == "rename")
                   setState(() {
-                    widget.folder.remove(n);
+                    widget.folder.rename(n, a["newName"]);
                     g.root.then((root) => root.save());
                   });
               });
-            }
+            },
           );
         }))
       ),

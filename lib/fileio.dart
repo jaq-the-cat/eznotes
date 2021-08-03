@@ -9,7 +9,7 @@ Future<Box> _box = (() async {
 Future<Folder> getRoot() async {
   final root = (await _box).toMap();
   if (root == null || root.isEmpty)
-    return Folder('root', []);
+    return Folder('', []);
   return _unserializeFolder((await _box).toMap());
 }
 
@@ -27,7 +27,7 @@ Note _unserializeNote(Map<dynamic, dynamic> raw) {
 }
 
 abstract class FSNode {
-  final String title;
+  String title;
   FSNode(this.title);
 
   Map<String, dynamic> serialize();
@@ -45,6 +45,12 @@ class Folder extends FSNode {
 
   void remove(FSNode child) {
     children.remove(child);
+  }
+
+  void rename(FSNode child, String newName) {
+    int i = children.indexOf(child);
+    if (i > -1)
+      children[i].title = newName;
   }
 
   void clear() {

@@ -25,6 +25,39 @@ Future<bool> confirmDelete(BuildContext context, String whatDelete) {
   );
 }
 
+Future<Map<String, dynamic>> renameOrDelete(BuildContext context, String what) {
+  return showDialog<Map<String, String>>(
+    context: context,
+    builder: (BuildContext context) => AlertDialog(
+      title: Text("Manage '$what'"),
+      actions: [
+        TextButton(
+          child: Text("CANCEL"),
+          onPressed: () => Navigator.of(context).pop(false),
+        ),
+        TextButton(
+          child: Text("RENAME"),
+          onPressed: () async {
+            Navigator.of(context).pop({
+              "action": "rename",
+              "newName": (await newX(context, "Renaming '$what'")),
+            });
+          },
+        ),
+        TextButton(
+          child: Text("DELETE"),
+          onPressed: () async {
+              Navigator.of(context).pop({
+                "action": "delete",
+                "confirm": (await confirmDelete(context, what)),
+            });
+          },
+        ),
+      ]
+    ),
+  );
+}
+
 Future<String> newX(BuildContext context, String toCreate) {
   final ctrl = TextEditingController();
   return showDialog<String>(
