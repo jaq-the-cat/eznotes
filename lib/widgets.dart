@@ -6,7 +6,7 @@ import 'dialogs.dart';
 
 class FolderPage extends StatefulWidget {
   FolderPage(this.folder, {beforeTitle, Key key}) :
-    header = "${beforeTitle ?? ""}/${folder.title}",
+    header = "${beforeTitle == "" ? "" : "/"}${folder.title}",
     super(key: key);
   final String header;
   final Folder folder;
@@ -37,17 +37,19 @@ class _FolderPageState extends State<FolderPage> {
             },
             onLongPress: () {
               renameOrDelete(context, n.title).then((a) {
-                if (a["action"] == "delete")
-                  if (a["confirm"])
+                if (a["action"] == "delete") {
+                  if (a["confirm"]) {
                     setState(() {
                       widget.folder.remove(n);
                       g.root.then((root) => root.save());
                     });
-                else if (a["action"] == "rename")
+                  }
+                } else if (a["action"] == "rename") {
                   setState(() {
                     widget.folder.rename(n, a["newName"]);
                     g.root.then((root) => root.save());
                   });
+                }
               });
             },
           );
@@ -93,7 +95,7 @@ class _FolderPageState extends State<FolderPage> {
 
 class NotePage extends StatefulWidget {
   NotePage(this.note, {beforeTitle, Key key}) :
-    header = "$beforeTitle/${note.title}",
+    header = "${beforeTitle == "" ? "" : "/"}${note.title}",
     super(key: key);
   final String header;
   final Note note;

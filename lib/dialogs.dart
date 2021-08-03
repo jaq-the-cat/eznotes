@@ -26,7 +26,7 @@ Future<bool> confirmDelete(BuildContext context, String whatDelete) {
 }
 
 Future<Map<String, dynamic>> renameOrDelete(BuildContext context, String what) {
-  return showDialog<Map<String, String>>(
+  return showDialog<Map<String, dynamic>>(
     context: context,
     builder: (BuildContext context) => AlertDialog(
       title: Text("Manage '$what'"),
