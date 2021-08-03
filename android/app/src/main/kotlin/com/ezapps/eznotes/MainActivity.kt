@@ -1,4 +1,4 @@
-package com.example.eznotes
+package com.ezapps.eznotes
 
 import io.flutter.embedding.android.FlutterActivity
 
