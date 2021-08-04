@@ -28,7 +28,10 @@ class _FolderPageState extends State<FolderPage> {
         children: List<Widget>.from(widget.folder.children.map((n) {
           return OutlinedButton.icon(
             icon: Icon(n.runtimeType == Folder ? Icons.folder_open : Icons.note),
-            label: Text(n.title),
+            label: Text(n.title,
+            style: TextStyle(
+              fontSize: n.title.length < 25 ? 14 : 11,
+            )),
             onPressed: () {
               if (n.runtimeType == Folder)
                 switchToPage(context, FolderPage(n, beforeTitle: widget.header));
